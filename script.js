@@ -4,13 +4,26 @@ document.getElementById('compareForm').addEventListener('submit', async function
     e.preventDefault();
     
     const file1 = document.getElementById('file1').files[0];
-    const file2 = document.getElementById('file2').files[0];
-    const format = document.getElementById('format').value;
-    const column1 = parseInt(document.getElementById('column1').value, 10) - 1;
-    const column2 = parseInt(document.getElementById('column2').value, 10) - 1;
+    console.log("🚀 ~ document.getElementById ~ file1:", file1);
+    const file2 = document.getElementById("file2").files[0];
+    console.log("🚀 ~ document.getElementById ~ file2:", file2);
+    const format = document.getElementById("format").value;
+    console.log("🚀 ~ document.getElementById ~ format:", format);
+    const column1 = parseInt(document.getElementById("column1").value, 10) - 1;
+    const column2 = parseInt(document.getElementById("column2").value, 10) - 1;
     const batchSize = 1000;
+    const extensionFile1 = file1.name.split(".").pop();
+    const extensionFile2 = file2.name.split(".").pop();
 
-    document.getElementById('progress').style.display = 'block';
+    document.getElementById("progress").style.display = "block";
+
+    if (extensionFile1 !== format || extensionFile2 !== format) {
+      document.getElementById("progress").style.display = "none";
+      alert(
+        "Os arquivos selecionados não correspondem ao formato especificado."
+      );
+      return;
+    }
 
     try {
         const [data1, data2] = await Promise.all([
